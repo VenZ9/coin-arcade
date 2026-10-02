@@ -27,7 +27,7 @@ export function DiceEngine({ game }: EngineProps) {
     Array.from({ length: n }, () => randInt(1, sides));
 
   const play = () => {
-    if (!flow.canAfford) return;
+    if (!flow.canPlay) return;
     flow.setStatus("playing");
     setRolling(true);
     window.setTimeout(() => {
@@ -142,14 +142,10 @@ export function DiceEngine({ game }: EngineProps) {
         full
         size="lg"
         onClick={play}
-        disabled={!flow.canAfford || rolling}
+        disabled={!flow.canPlay || rolling}
       >
         {rolling ? "Rolling…" : "Play"}
       </GameButton>
-
-      {!flow.canAfford ? (
-        <p className="text-center text-xs text-bad">Not enough Coins.</p>
-      ) : null}
 
       <ResultPanel
         status={flow.status}
@@ -157,7 +153,7 @@ export function DiceEngine({ game }: EngineProps) {
         net={flow.net}
         xp={flow.xp}
         onPlayAgain={flow.status === "idle" ? undefined : again}
-        disabled={!flow.canAfford}
+        disabled={!flow.canPlay}
       />
     </div>
   );

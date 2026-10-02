@@ -52,6 +52,8 @@ export interface Settings {
   sound: boolean;
   haptics: boolean;
   reduceMotion: boolean;
+  /** The last wager the player used, restored as the default next session. */
+  lastWager: number;
 }
 
 export interface DailyState {

@@ -19,7 +19,7 @@ export function SlotsEngine({ game }: EngineProps) {
   const [spinning, setSpinning] = useState(false);
 
   const play = () => {
-    if (!flow.canAfford) return;
+    if (!flow.canPlay) return;
     flow.setStatus("playing");
     setSpinning(true);
     setFaces([]);
@@ -66,19 +66,16 @@ export function SlotsEngine({ game }: EngineProps) {
           />
         ))}
       </div>
-      <GameButton full size="lg" onClick={play} disabled={!flow.canAfford || spinning}>
+      <GameButton full size="lg" onClick={play} disabled={!flow.canPlay || spinning}>
         {spinning ? "Spinning…" : "Play"}
       </GameButton>
-      {!flow.canAfford ? (
-        <p className="text-center text-xs text-bad">Not enough Coins.</p>
-      ) : null}
       <ResultPanel
         status={flow.status}
         message={flow.message}
         net={flow.net}
         xp={flow.xp}
         onPlayAgain={flow.status === "idle" ? undefined : again}
-        disabled={!flow.canAfford}
+        disabled={!flow.canPlay}
       />
     </div>
   );

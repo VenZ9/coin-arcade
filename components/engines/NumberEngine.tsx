@@ -24,7 +24,7 @@ export function NumberEngine({ game }: EngineProps) {
   const [next, setNext] = useState<number | null>(null);
 
   const playGuess = () => {
-    if (!flow.canAfford) return;
+    if (!flow.canPlay) return;
     flow.setStatus("playing");
     setBusy(true);
     setAnswer(null);
@@ -40,7 +40,7 @@ export function NumberEngine({ game }: EngineProps) {
   };
 
   const startHigherLower = () => {
-    if (!flow.canAfford) return;
+    if (!flow.canPlay) return;
     flow.setStatus("playing");
     setNext(null);
     setCurrent(randInt(2, 14));
@@ -98,7 +98,7 @@ export function NumberEngine({ game }: EngineProps) {
           </div>
         </div>
         {!playing ? (
-          <GameButton full size="lg" onClick={startHigherLower} disabled={!flow.canAfford}>
+          <GameButton full size="lg" onClick={startHigherLower} disabled={!flow.canPlay}>
             Play
           </GameButton>
         ) : (
@@ -111,16 +111,13 @@ export function NumberEngine({ game }: EngineProps) {
             </GameButton>
           </div>
         )}
-        {!flow.canAfford ? (
-          <p className="text-center text-xs text-bad">Not enough Coins.</p>
-        ) : null}
         <ResultPanel
           status={flow.status}
           message={flow.message}
           net={flow.net}
           xp={flow.xp}
           onPlayAgain={flow.status === "idle" ? undefined : again}
-          disabled={!flow.canAfford}
+          disabled={!flow.canPlay}
         />
       </div>
     );
@@ -182,13 +179,9 @@ export function NumberEngine({ game }: EngineProps) {
         </div>
       ) : null}
 
-      <GameButton full size="lg" onClick={playGuess} disabled={!flow.canAfford || busy}>
+      <GameButton full size="lg" onClick={playGuess} disabled={!flow.canPlay || busy}>
         {busy ? "Revealing…" : "Play"}
       </GameButton>
-
-      {!flow.canAfford ? (
-        <p className="text-center text-xs text-bad">Not enough Coins.</p>
-      ) : null}
 
       <ResultPanel
         status={flow.status}
@@ -196,7 +189,7 @@ export function NumberEngine({ game }: EngineProps) {
         net={flow.net}
         xp={flow.xp}
         onPlayAgain={flow.status === "idle" ? undefined : again}
-        disabled={!flow.canAfford}
+        disabled={!flow.canPlay}
       />
     </div>
   );

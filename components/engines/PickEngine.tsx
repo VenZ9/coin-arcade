@@ -19,7 +19,7 @@ export function PickEngine({ game }: EngineProps) {
   const [winner, setWinner] = useState<number | null>(null);
 
   const play = () => {
-    if (pick === null || !flow.canAfford) return;
+    if (pick === null || !flow.canPlay) return;
     flow.setStatus("playing");
     setWinner(null);
     window.setTimeout(() => {
@@ -112,14 +112,10 @@ export function PickEngine({ game }: EngineProps) {
         full
         size="lg"
         onClick={play}
-        disabled={pick === null || !flow.canAfford || flow.status === "playing"}
+        disabled={pick === null || !flow.canPlay || flow.status === "playing"}
       >
         {flow.status === "playing" ? "Playing…" : "Play"}
       </GameButton>
-
-      {!flow.canAfford ? (
-        <p className="text-center text-xs text-bad">Not enough Coins.</p>
-      ) : null}
 
       <ResultPanel
         status={flow.status}
@@ -127,7 +123,7 @@ export function PickEngine({ game }: EngineProps) {
         net={flow.net}
         xp={flow.xp}
         onPlayAgain={flow.status === "idle" ? undefined : again}
-        disabled={!flow.canAfford}
+        disabled={!flow.canPlay}
       />
 
       {flow.itemId ? (

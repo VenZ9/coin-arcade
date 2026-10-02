@@ -18,6 +18,7 @@ import type {
 } from "./types";
 import { levelFromXp, xpForPlay, xpProgress, type XpProgress } from "./levels";
 import { ACHIEVEMENTS } from "./achievements";
+import { DEFAULT_WAGER, MIN_WAGER } from "./wager";
 
 const STORAGE_KEY = "coin-arcade:v1";
 const SAVE_VERSION = 1;
@@ -47,7 +48,12 @@ export function defaultState(): SaveState {
     achievements: [],
     daily: { lastClaim: null, streak: 0 },
     history: [],
-    settings: { sound: true, haptics: true, reduceMotion: false },
+    settings: {
+      sound: true,
+      haptics: true,
+      reduceMotion: false,
+      lastWager: DEFAULT_WAGER,
+    },
     createdAt: Date.now(),
   };
 }
@@ -158,6 +164,10 @@ function sanitize(raw: unknown): SaveState {
       sound: r.settings?.sound !== false,
       haptics: r.settings?.haptics !== false,
       reduceMotion: r.settings?.reduceMotion === true,
+      lastWager: Math.max(
+        MIN_WAGER,
+        Math.floor(num(r.settings?.lastWager, DEFAULT_WAGER))
+      ),
     },
     createdAt: num(r.createdAt, Date.now()),
   };

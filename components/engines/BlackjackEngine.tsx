@@ -44,7 +44,7 @@ export function BlackjackEngine({ game }: EngineProps) {
   const [hideHole, setHideHole] = useState(true);
 
   const start = () => {
-    if (!flow.canAfford) return;
+    if (!flow.canPlay) return;
     flow.setStatus("playing");
     setPlayer([draw(), draw()]);
     setDealer([draw(), draw()]);
@@ -147,7 +147,7 @@ export function BlackjackEngine({ game }: EngineProps) {
       </div>
 
       {!playing ? (
-        <GameButton full size="lg" onClick={start} disabled={!flow.canAfford}>
+        <GameButton full size="lg" onClick={start} disabled={!flow.canPlay}>
           Play
         </GameButton>
       ) : (
@@ -161,17 +161,13 @@ export function BlackjackEngine({ game }: EngineProps) {
         </div>
       )}
 
-      {!flow.canAfford ? (
-        <p className="text-center text-xs text-bad">Not enough Coins.</p>
-      ) : null}
-
       <ResultPanel
         status={flow.status}
         message={flow.message}
         net={flow.net}
         xp={flow.xp}
         onPlayAgain={flow.status === "idle" ? undefined : again}
-        disabled={!flow.canAfford}
+        disabled={!flow.canPlay}
       />
     </div>
   );

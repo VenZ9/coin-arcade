@@ -20,7 +20,7 @@ export function ChestEngine({ game }: EngineProps) {
   const [busy, setBusy] = useState(false);
 
   const play = (i: number) => {
-    if (!flow.canAfford || busy) return;
+    if (!flow.canPlay || busy) return;
     flow.setStatus("playing");
     setBusy(true);
     const pool = shuffle(
@@ -94,17 +94,13 @@ export function ChestEngine({ game }: EngineProps) {
         </p>
       ) : null}
 
-      {!flow.canAfford ? (
-        <p className="text-center text-xs text-bad">Not enough Coins.</p>
-      ) : null}
-
       <ResultPanel
         status={flow.status}
         message={flow.message}
         net={flow.net}
         xp={flow.xp}
         onPlayAgain={flow.status === "idle" ? undefined : again}
-        disabled={!flow.canAfford}
+        disabled={!flow.canPlay}
       />
 
       {flow.itemId ? (

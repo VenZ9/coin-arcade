@@ -21,7 +21,7 @@ export function WheelEngine({ game }: EngineProps) {
   const [number, setNumber] = useState(7);
 
   const spinWheel = () => {
-    if (!flow.canAfford) return;
+    if (!flow.canPlay) return;
     flow.setStatus("playing");
     setSpinning(true);
     const idx = randInt(0, segments.length - 1);
@@ -40,7 +40,7 @@ export function WheelEngine({ game }: EngineProps) {
   };
 
   const spinRoulette = () => {
-    if (!flow.canAfford) return;
+    if (!flow.canPlay) return;
     flow.setStatus("playing");
     setSpinning(true);
     window.setTimeout(() => {
@@ -105,19 +105,16 @@ export function WheelEngine({ game }: EngineProps) {
             />
           </div>
         ) : null}
-        <GameButton full size="lg" onClick={spinRoulette} disabled={!flow.canAfford || spinning}>
+        <GameButton full size="lg" onClick={spinRoulette} disabled={!flow.canPlay || spinning}>
           {spinning ? "Spinning…" : "Play"}
         </GameButton>
-        {!flow.canAfford ? (
-          <p className="text-center text-xs text-bad">Not enough Coins.</p>
-        ) : null}
         <ResultPanel
           status={flow.status}
           message={flow.message}
           net={flow.net}
           xp={flow.xp}
           onPlayAgain={flow.status === "idle" ? undefined : again}
-          disabled={!flow.canAfford}
+          disabled={!flow.canPlay}
         />
       </div>
     );
@@ -129,19 +126,16 @@ export function WheelEngine({ game }: EngineProps) {
       <div className="flex justify-center py-2">
         <Wheel segments={segments} rotation={rotation} spinning={spinning} />
       </div>
-      <GameButton full size="lg" onClick={spinWheel} disabled={!flow.canAfford || spinning}>
+      <GameButton full size="lg" onClick={spinWheel} disabled={!flow.canPlay || spinning}>
         {spinning ? "Spinning…" : "Play"}
       </GameButton>
-      {!flow.canAfford ? (
-        <p className="text-center text-xs text-bad">Not enough Coins.</p>
-      ) : null}
       <ResultPanel
         status={flow.status}
         message={flow.message}
         net={flow.net}
         xp={flow.xp}
         onPlayAgain={flow.status === "idle" ? undefined : again}
-        disabled={!flow.canAfford}
+        disabled={!flow.canPlay}
       />
     </div>
   );

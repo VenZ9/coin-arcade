@@ -513,5 +513,3 @@ export function gamesByCategory(c: Category): GameConfig[] {
 }
 
 export const FEATURED_GAMES = GAMES.filter((g) => g.featured);
-
-export const WAGER_OPTIONS = [10, 25, 50, 100, 250, 500, 1000];

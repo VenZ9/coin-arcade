@@ -31,7 +31,7 @@ export function GridEngine({ game }: EngineProps) {
   const [target, setTarget] = useState(-1);
 
   const start = () => {
-    if (!flow.canAfford) return;
+    if (!flow.canPlay) return;
     flow.setStatus("playing");
     setMult(1);
     setActive(true);
@@ -136,7 +136,7 @@ export function GridEngine({ game }: EngineProps) {
       )}
 
       {!playing ? (
-        <GameButton full size="lg" onClick={start} disabled={!flow.canAfford}>
+        <GameButton full size="lg" onClick={start} disabled={!flow.canPlay}>
           Play
         </GameButton>
       ) : (
@@ -145,17 +145,13 @@ export function GridEngine({ game }: EngineProps) {
         </GameButton>
       )}
 
-      {!flow.canAfford ? (
-        <p className="text-center text-xs text-bad">Not enough Coins.</p>
-      ) : null}
-
       <ResultPanel
         status={flow.status}
         message={flow.message}
         net={flow.net}
         xp={flow.xp}
         onPlayAgain={flow.status === "idle" ? undefined : again}
-        disabled={!flow.canAfford}
+        disabled={!flow.canPlay}
       />
     </div>
   );

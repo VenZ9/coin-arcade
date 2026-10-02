@@ -51,7 +51,7 @@ export function MultiplierEngine({ game }: EngineProps) {
   };
 
   const start = () => {
-    if (!flow.canAfford) return;
+    if (!flow.canPlay) return;
     multRef.current = 1;
     setMult(1);
     setStep(0);
@@ -156,7 +156,7 @@ export function MultiplierEngine({ game }: EngineProps) {
       ) : null}
 
       {!playing ? (
-        <GameButton full size="lg" onClick={start} disabled={!flow.canAfford}>
+        <GameButton full size="lg" onClick={start} disabled={!flow.canPlay}>
           Play
         </GameButton>
       ) : isTimed ? (
@@ -187,17 +187,13 @@ export function MultiplierEngine({ game }: EngineProps) {
         </div>
       )}
 
-      {!flow.canAfford ? (
-        <p className="text-center text-xs text-bad">Not enough Coins.</p>
-      ) : null}
-
       <ResultPanel
         status={flow.status}
         message={flow.message}
         net={flow.net}
         xp={flow.xp}
         onPlayAgain={flow.status === "idle" ? undefined : again}
-        disabled={!flow.canAfford}
+        disabled={!flow.canPlay}
       />
     </div>
   );

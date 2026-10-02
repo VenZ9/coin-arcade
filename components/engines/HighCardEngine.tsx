@@ -23,7 +23,7 @@ export function HighCardEngine({ game }: EngineProps) {
   const [busy, setBusy] = useState(false);
 
   const play = () => {
-    if (!flow.canAfford) return;
+    if (!flow.canPlay) return;
     flow.setStatus("playing");
     setBusy(true);
     setMine(null);
@@ -67,13 +67,9 @@ export function HighCardEngine({ game }: EngineProps) {
         <CardFace v={theirs} label="Dealer" />
       </div>
 
-      <GameButton full size="lg" onClick={play} disabled={!flow.canAfford || busy}>
+      <GameButton full size="lg" onClick={play} disabled={!flow.canPlay || busy}>
         {busy ? "Dealing…" : "Play"}
       </GameButton>
-
-      {!flow.canAfford ? (
-        <p className="text-center text-xs text-bad">Not enough Coins.</p>
-      ) : null}
 
       <ResultPanel
         status={flow.status}
@@ -81,7 +77,7 @@ export function HighCardEngine({ game }: EngineProps) {
         net={flow.net}
         xp={flow.xp}
         onPlayAgain={flow.status === "idle" ? undefined : again}
-        disabled={!flow.canAfford}
+        disabled={!flow.canPlay}
       />
     </div>
   );
